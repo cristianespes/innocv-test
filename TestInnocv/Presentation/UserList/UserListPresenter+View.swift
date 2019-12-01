@@ -16,6 +16,7 @@ protocol UserListPresenter: BasePresenter {
     func getItemBy(_ index: Int) -> User
     
     func itemClicked(item: User)
+    func addItemClicked()
 }
 
 protocol UserListView {
@@ -24,4 +25,5 @@ protocol UserListView {
     func hideLoading()
     func stateData()
     func emptyData()
+    func navigateToProfile(item: User)
 }

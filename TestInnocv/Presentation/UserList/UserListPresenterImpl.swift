@@ -64,6 +64,10 @@ extension UserListPresenterImpl: UserListPresenter {
     }
     
     func itemClicked(item: User) {
-        print("Patata -> user clicked: \(item)")
+        view.navigateToProfile(item: item)
+    }
+    
+    func addItemClicked() {
+        print("Patata -> add user clicked")
     }
 }

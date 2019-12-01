@@ -33,9 +33,13 @@ class UserListViewController: UIViewController {
         super.viewDidLoad()
 
         presenter.initialize()
-        presenter.update()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.update()
+    }
 }
 
 extension UserListViewController: UserListView {
@@ -74,6 +78,12 @@ extension UserListViewController: UserListView {
     func emptyData() {
         emptyLabel.isHidden = false
         tableView.isHidden = true
+    }
+    
+    func navigateToProfile(item: User) {
+        let profileViewController = UserProfileViewController.newInstance(item: item)
+        
+        navigationController?.pushViewController(profileViewController, animated: true)
     }
 }
 
@@ -131,11 +141,20 @@ private extension UserListViewController {
     func setupNavigationController() {
         title = "app.innocv.users.users_title".localized
         
+        let addUserButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUser))
+        
+        // Añadir el botón a la vista
+        navigationItem.rightBarButtonItem = addUserButton
+        
         searchController = UISearchController(searchResultsController: nil)
         setupSearchController(self,
                               searchController: searchController,
                               tableView: tableView,
                               placeholder: "app.innocv.users.users_searching_placeholder".localized)
+    }
+    
+    @objc func addUser() {
+        presenter.addItemClicked()
     }
     
     func setupSearchController(_ vc: UISearchResultsUpdating, searchController: UISearchController, tableView: UITableView, placeholder: String) {
