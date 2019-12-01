@@ -1,0 +1,4 @@
+// MARK: - General
+"app.innocv.users.users_title" = "Users";
+"app.innocv.users.users_empty" = "There are no users";
+"app.innocv.users.users_searching_placeholder" = "Introduce name...";

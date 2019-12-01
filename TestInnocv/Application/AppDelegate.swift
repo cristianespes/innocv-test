@@ -12,13 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window : UIWindow?
+    
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    let webServices = WebServices()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        /*window = UIWindow(frame: UIScreen.main.bounds)
+        if #available(iOS 13.0, *) {
+            return true
+        }
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
         
         window?.rootViewController = UINavigationController(rootViewController: UserListViewController.newInstance())
-        window?.makeKeyAndVisible()*/
+        window?.makeKeyAndVisible()
         
         return true
     }
