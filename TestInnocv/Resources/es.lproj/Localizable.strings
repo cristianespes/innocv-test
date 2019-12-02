@@ -1,4 +1,10 @@
 // MARK: - General
-"app.innocv.users.users_title" = "Usuarios";
-"app.innocv.users.users_empty" = "No hay usuarios";
-"app.innocv.users.users_searching_placeholder" = "Introduzca nombre...";
+"app.innocv.users_title" = "Usuarios";
+"app.innocv.users_empty" = "No hay usuarios";
+"app.innocv.users_searching_placeholder" = "Introduzca nombre...";
+"app.innocv.add" = "Añadir";
+"app.innocv.update" = "Actualizar";
+"app.innocv.name" = "Nombre";
+"app.innocv.introduce_name" = "Introduzca nombre...";
+"app.innocv.birthday" = "Fecha de nacimiento";
+"app.innocv.introduce_birthday" = "Introduzca fecha de nacimiento...";

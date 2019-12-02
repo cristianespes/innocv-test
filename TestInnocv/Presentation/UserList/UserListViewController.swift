@@ -15,10 +15,16 @@ class UserListViewController: UIViewController {
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var searchController : UISearchController!
-    
     // MARK: Properties
     var presenter: UserListPresenter!
+    var searchController : UISearchController!
+    
+    var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM yyyy"
+        
+        return dateFormatter
+    }()
     
     static func newInstance() -> UserListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -42,6 +48,7 @@ class UserListViewController: UIViewController {
     }
 }
 
+// MARK: UserListView
 extension UserListViewController: UserListView {
     func setupViews() {
         setupNavigationController()
@@ -85,8 +92,16 @@ extension UserListViewController: UserListView {
         
         navigationController?.pushViewController(profileViewController, animated: true)
     }
+    
+    func navigateToAddUser() {
+        let profileViewController = UserProfileViewController.newInstance()
+        let navigationProfileViewController = UINavigationController(rootViewController: profileViewController)
+        
+        self.present(navigationProfileViewController, animated: true)
+    }
 }
 
+// MARK: UITableViewDataSource
 extension UserListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.searchController.isActive && !searchBarIsEmpty() {
@@ -110,6 +125,7 @@ extension UserListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
 extension UserListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -123,6 +139,7 @@ extension UserListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: UISearchResultsUpdating
 extension UserListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
@@ -139,7 +156,7 @@ extension UserListViewController: UISearchResultsUpdating {
 // MARK: Private
 private extension UserListViewController {
     func setupNavigationController() {
-        title = "app.innocv.users.users_title".localized
+        title = "app.innocv.users_title".localized
         
         let addUserButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUser))
         
@@ -150,7 +167,7 @@ private extension UserListViewController {
         setupSearchController(self,
                               searchController: searchController,
                               tableView: tableView,
-                              placeholder: "app.innocv.users.users_searching_placeholder".localized)
+                              placeholder: "app.innocv.users_searching_placeholder".localized)
     }
     
     @objc func addUser() {
@@ -176,6 +193,11 @@ private extension UserListViewController {
         searchController.searchBar.placeholder = placeholder
     }
     
+    func setupActivityIndicator() {
+        activityIndicator.style = .whiteLarge
+        activityIndicator.color = .gray
+    }
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -187,13 +209,8 @@ private extension UserListViewController {
         tableView.backgroundColor = UIColor.clear
     }
     
-    func setupActivityIndicator() {
-        activityIndicator.style = .whiteLarge
-        activityIndicator.color = .gray
-    }
-    
     func setupEmpty() {
-        emptyLabel.text = "app.innocv.users.users_empty".localized
+        emptyLabel.text = "app.innocv.users_empty".localized
         emptyLabel.textColor = .gray
         emptyLabel.textAlignment = .center
         emptyLabel.font = UIFont.preferredFont(forTextStyle: .body)
@@ -211,7 +228,14 @@ private extension UserListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "\(item.birthdate)"
+        
+        if let birthdate = item.birthdate {
+            cell.detailTextLabel?.text = dateFormatter.string(from: birthdate)
+        } else {
+            cell.detailTextLabel?.text = ""
+        }
+        
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

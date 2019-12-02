@@ -68,6 +68,6 @@ extension UserListPresenterImpl: UserListPresenter {
     }
     
     func addItemClicked() {
-        print("Patata -> add user clicked")
+        view.navigateToAddUser()
     }
 }

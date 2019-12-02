@@ -77,6 +77,8 @@ extension ApiEndpoint {
         let url = buildUrl(with: baseURL, adding: parameters)
         
         var request = URLRequest(url: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type") // the request is JSON
+        request.setValue("application/json", forHTTPHeaderField: "Accept") // the expected response is also JSON
         request.httpMethod = method.rawValue
         
         print(request.url!)

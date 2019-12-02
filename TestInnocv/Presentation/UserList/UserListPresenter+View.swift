@@ -26,4 +26,5 @@ protocol UserListView {
     func stateData()
     func emptyData()
     func navigateToProfile(item: User)
+    func navigateToAddUser()
 }
