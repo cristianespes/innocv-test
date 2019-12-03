@@ -34,7 +34,8 @@ extension UserListPresenterImpl: UserListPresenter {
         webServices.getUsers { [weak self] (error, users) in
             
             if let error = error {
-                print("UserListPresenterImpl -> Error: \(error)")
+                print("Error: \(error)")
+                self?.view.showError(message: "app.innocv.there_was_error".localized)
                 return
             }
                         
@@ -64,6 +65,48 @@ extension UserListPresenterImpl: UserListPresenter {
     }
     
     func itemClicked(item: User) {
-        print("Patata -> user clicked: \(item)")
+        view.navigateToProfile(item: item)
+    }
+    
+    func addItemClicked() {
+        view.navigateToAddUser()
+    }
+    
+    func itemDeleted(index: Int, item: User) {
+        delete(item) { isSuccess in
+            if isSuccess {
+                self.searchResults = self.searchResults.filter { $0 != item }
+                self.users = self.users.filter { $0 != item }
+                self.view.deleteItem(index: index)
+            } else {
+                self.view.showError(message: "app.innocv.there_was_error".localized)
+            }
+        }
+    }
+}
+
+private extension UserListPresenterImpl {
+    func delete(_ user: User, completion: @escaping (Bool) -> Void) {
+        self.view.showLoading()
+        
+        guard let userId = user.id else {
+            self.view.hideLoading()
+            self.view.stateData()
+            completion(false)
+            return
+        }
+        
+        webServices.removeTo(userId: userId) { [weak self] (error) in
+            
+            if let error = error {
+                print("Error: \(error)")
+                self?.view.showError(message: "app.innocv.there_was_error".localized)
+                return
+            }
+                             
+            self?.view.hideLoading()
+            self?.view.stateData()
+            completion(true)
+        }
     }
 }

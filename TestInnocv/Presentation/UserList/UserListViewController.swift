@@ -8,17 +8,16 @@
 
 import UIKit
 
-class UserListViewController: UIViewController {
+class UserListViewController: BaseViewController {
     
     // MARK: IBoulets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emptyLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    var searchController : UISearchController!
-    
     // MARK: Properties
     var presenter: UserListPresenter!
+    var searchController : UISearchController!
     
     static func newInstance() -> UserListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -35,9 +34,9 @@ class UserListViewController: UIViewController {
         presenter.initialize()
         presenter.update()
     }
-
 }
 
+// MARK: UserListView
 extension UserListViewController: UserListView {
     func setupViews() {
         setupNavigationController()
@@ -75,8 +74,31 @@ extension UserListViewController: UserListView {
         emptyLabel.isHidden = false
         tableView.isHidden = true
     }
+    
+    func showError(message: String) {
+        showWarningAlert(message: message)
+    }
+    
+    func deleteItem(index: Int) {
+        let indexPath = IndexPath(item: index, section: 0)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    func navigateToProfile(item: User) {
+        let profileViewController = UserProfileViewController.newInstance(item: item, delegate: self)
+        
+        navigationController?.pushViewController(profileViewController, animated: true)
+    }
+    
+    func navigateToAddUser() {
+        let profileViewController = UserProfileViewController.newInstance(delegate: self)
+        let navigationProfileViewController = UINavigationController(rootViewController: profileViewController)
+        
+        self.present(navigationProfileViewController, animated: true)
+    }
 }
 
+// MARK: UITableViewDataSource
 extension UserListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.searchController.isActive && !searchBarIsEmpty() {
@@ -100,6 +122,7 @@ extension UserListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
 extension UserListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -111,8 +134,23 @@ extension UserListViewController: UITableViewDelegate {
             presenter.itemClicked(item: presenter.getItemsOnTableView()[indexPath.row])
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if self.searchController.isActive && !searchBarIsEmpty() {
+                presenter.itemDeleted(index: indexPath.row, item: presenter.searchResults[indexPath.row])
+            } else {
+                presenter.itemDeleted(index: indexPath.row, item: presenter.getItemsOnTableView()[indexPath.row])
+            }
+        }
+    }
 }
 
+// MARK: UISearchResultsUpdating
 extension UserListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
@@ -126,16 +164,34 @@ extension UserListViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: UserProfileDelegate
+extension UserListViewController: UserProfileDelegate {
+    func addedNewUser() {
+        presenter.update()
+    }
+    
+    func updatedUser() {
+        presenter.update()
+    }
+}
+
 // MARK: Private
 private extension UserListViewController {
     func setupNavigationController() {
-        title = "app.innocv.users.users_title".localized
+        title = "app.innocv.users_title".localized
+        
+        let addUserButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUser))
+        navigationItem.rightBarButtonItem = addUserButton
         
         searchController = UISearchController(searchResultsController: nil)
         setupSearchController(self,
                               searchController: searchController,
                               tableView: tableView,
-                              placeholder: "app.innocv.users.users_searching_placeholder".localized)
+                              placeholder: "app.innocv.users_searching_placeholder".localized)
+    }
+    
+    @objc func addUser() {
+        presenter.addItemClicked()
     }
     
     func setupSearchController(_ vc: UISearchResultsUpdating, searchController: UISearchController, tableView: UITableView, placeholder: String) {
@@ -157,6 +213,11 @@ private extension UserListViewController {
         searchController.searchBar.placeholder = placeholder
     }
     
+    func setupActivityIndicator() {
+        activityIndicator.style = .whiteLarge
+        activityIndicator.color = .gray
+    }
+    
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -168,13 +229,8 @@ private extension UserListViewController {
         tableView.backgroundColor = UIColor.clear
     }
     
-    func setupActivityIndicator() {
-        activityIndicator.style = .whiteLarge
-        activityIndicator.color = .gray
-    }
-    
     func setupEmpty() {
-        emptyLabel.text = "app.innocv.users.users_empty".localized
+        emptyLabel.text = "app.innocv.users_empty".localized
         emptyLabel.textColor = .gray
         emptyLabel.textAlignment = .center
         emptyLabel.font = UIFont.preferredFont(forTextStyle: .body)
@@ -192,7 +248,14 @@ private extension UserListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "\(item.birthdate)"
+        
+        if let birthdate = item.birthdate {
+            cell.detailTextLabel?.text = dateFormatter.string(from: birthdate)
+        } else {
+            cell.detailTextLabel?.text = ""
+        }
+        
+        cell.accessoryType = .disclosureIndicator
         
         return cell
     }

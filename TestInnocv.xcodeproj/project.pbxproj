@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1921542D2394383E0056E49D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1921542B2394383E0056E49D /* Localizable.strings */; };
+		1921543323944B1F0056E49D /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1921543223944B1F0056E49D /* UserProfileViewController.swift */; };
+		196EDC292395B4AB00439142 /* UserProfilePresenterImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC282395B4AB00439142 /* UserProfilePresenterImpl.swift */; };
+		196EDC2B2395B4BD00439142 /* UserProfilePresenter+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2A2395B4BD00439142 /* UserProfilePresenter+View.swift */; };
+		196EDC2D2395CD9200439142 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2C2395CD9200439142 /* UserRequest.swift */; };
+		196EDC2F2395CDFC00439142 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2E2395CDFC00439142 /* Date+Extension.swift */; };
+		198B138F2396D9F200BB3C0B /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */; };
+		198B13912396EAE600BB3C0B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198B13902396EAE600BB3C0B /* BaseViewController.swift */; };
 		19C374A32393E1D50097E0D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C374A22393E1D50097E0D5 /* AppDelegate.swift */; };
 		19C374A52393E1D50097E0D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C374A42393E1D50097E0D5 /* SceneDelegate.swift */; };
 		19C374AA2393E1D50097E0D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19C374A82393E1D50097E0D5 /* Main.storyboard */; };
@@ -41,6 +48,13 @@
 /* Begin PBXFileReference section */
 		1921542C2394383E0056E49D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1921542E2394384C0056E49D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1921543223944B1F0056E49D /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		196EDC282395B4AB00439142 /* UserProfilePresenterImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePresenterImpl.swift; sourceTree = "<group>"; };
+		196EDC2A2395B4BD00439142 /* UserProfilePresenter+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePresenter+View.swift"; sourceTree = "<group>"; };
+		196EDC2C2395CD9200439142 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
+		196EDC2E2395CDFC00439142 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		198B13902396EAE600BB3C0B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		19C3749F2393E1D50097E0D5 /* TestInnocv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestInnocv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19C374A22393E1D50097E0D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19C374A42393E1D50097E0D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +100,9 @@
 		1921542F2394443F0056E49D /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				196EDC282395B4AB00439142 /* UserProfilePresenterImpl.swift */,
+				1921543223944B1F0056E49D /* UserProfileViewController.swift */,
+				196EDC2A2395B4BD00439142 /* UserProfilePresenter+View.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -157,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				19C374CA2393E38E0097E0D5 /* User.swift */,
+				196EDC2C2395CD9200439142 /* UserRequest.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -195,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				19C374D52393EF540097E0D5 /* BasePresenter.swift */,
+				198B13902396EAE600BB3C0B /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -204,6 +223,8 @@
 			children = (
 				19C374DE2393F2C80097E0D5 /* DateFormatter+Extension.swift */,
 				19C374E6239422730097E0D5 /* String+Extension.swift */,
+				196EDC2E2395CDFC00439142 /* Date+Extension.swift */,
+				198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -312,11 +333,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				19C374D32393EF120097E0D5 /* UserListPresenter+View.swift in Sources */,
+				1921543323944B1F0056E49D /* UserProfileViewController.swift in Sources */,
+				196EDC2D2395CD9200439142 /* UserRequest.swift in Sources */,
 				19C374D62393EF540097E0D5 /* BasePresenter.swift in Sources */,
+				196EDC292395B4AB00439142 /* UserProfilePresenterImpl.swift in Sources */,
+				198B13912396EAE600BB3C0B /* BaseViewController.swift in Sources */,
+				198B138F2396D9F200BB3C0B /* UITextField+Extension.swift in Sources */,
 				19C374DA2393F27E0097E0D5 /* BaseServices.swift in Sources */,
 				19C374E12393F3100097E0D5 /* WebServices.swift in Sources */,
 				19C374CD2393EB620097E0D5 /* UserListViewController.swift in Sources */,
 				19C374E52393F5230097E0D5 /* ApiResponse.swift in Sources */,
+				196EDC2B2395B4BD00439142 /* UserProfilePresenter+View.swift in Sources */,
 				19C374E32393F4950097E0D5 /* ApiError.swift in Sources */,
 				19C374D12393EED60097E0D5 /* UserListPresenterImpl.swift in Sources */,
 				19C374E7239422730097E0D5 /* String+Extension.swift in Sources */,
@@ -324,6 +351,7 @@
 				19C374A32393E1D50097E0D5 /* AppDelegate.swift in Sources */,
 				19C374A52393E1D50097E0D5 /* SceneDelegate.swift in Sources */,
 				19C374DF2393F2C80097E0D5 /* DateFormatter+Extension.swift in Sources */,
+				196EDC2F2395CDFC00439142 /* Date+Extension.swift in Sources */,
 				19C374D82393EFC80097E0D5 /* ApiEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,4 +1,21 @@
 // MARK: - General
-"app.innocv.users.users_title" = "Usuarios";
-"app.innocv.users.users_empty" = "No hay usuarios";
-"app.innocv.users.users_searching_placeholder" = "Introduzca nombre...";
+"app.innocv.users_title" = "Usuarios";
+"app.innocv.users_empty" = "No hay usuarios";
+"app.innocv.users_searching_placeholder" = "Introduzca nombre...";
+"app.innocv.add" = "Añadir";
+"app.innocv.update" = "Actualizar";
+"app.innocv.name" = "Nombre";
+"app.innocv.introduce_name" = "Introduzca nombre...";
+"app.innocv.birthday" = "Fecha de nacimiento";
+"app.innocv.introduce_birthday" = "Introduzca fecha de nacimiento...";
+"app.innocv.cancel" = "Cancelar";
+"app.innocv.done" = "Hecho";
+"app.innocv.cancel_new_user_title" = "Cancelar nuevo usuario";
+"app.innocv.cancel_new_user_message" = "¿Desea cancelar la creación del nuevo usuario?";
+"app.innocv.yes" = "Sí";
+"app.innocv.no" = "No";
+"app.innocv.warning" = "Atención";
+"app.innocv.must_fill_red_fields" = "Debe rellenar los campos en rojo";
+"app.innocv.accept" = "Aceptar";
+"app.innocv.detail" = "Detalle";
+"app.innocv.there_was_error" = "Ha ocurrido un error. Por favor, inténtelo de nuevo más tarde.";

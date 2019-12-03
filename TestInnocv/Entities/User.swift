@@ -13,6 +13,12 @@ struct User: Codable {
   var name: String?
   var birthdate: Date?
     
+    init(name: String, birthdate: Date) {
+        self.id = 0
+        self.name = name
+        self.birthdate = birthdate
+    }
+    
     init(from decoder: Decoder) throws {
         let dateFormatter = DateFormatter()
         
