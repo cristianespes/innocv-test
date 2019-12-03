@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserListViewController: UIViewController {
+class UserListViewController: BaseViewController {
     
     // MARK: IBoulets
     @IBOutlet weak var tableView: UITableView!
@@ -18,13 +18,6 @@ class UserListViewController: UIViewController {
     // MARK: Properties
     var presenter: UserListPresenter!
     var searchController : UISearchController!
-    
-    var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        
-        return dateFormatter
-    }()
     
     static func newInstance() -> UserListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -39,11 +32,6 @@ class UserListViewController: UIViewController {
         super.viewDidLoad()
 
         presenter.initialize()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         presenter.update()
     }
 }
@@ -88,13 +76,13 @@ extension UserListViewController: UserListView {
     }
     
     func navigateToProfile(item: User) {
-        let profileViewController = UserProfileViewController.newInstance(item: item)
+        let profileViewController = UserProfileViewController.newInstance(item: item, delegate: self)
         
         navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     func navigateToAddUser() {
-        let profileViewController = UserProfileViewController.newInstance()
+        let profileViewController = UserProfileViewController.newInstance(delegate: self)
         let navigationProfileViewController = UINavigationController(rootViewController: profileViewController)
         
         self.present(navigationProfileViewController, animated: true)
@@ -153,14 +141,25 @@ extension UserListViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: UserProfileDelegate
+extension UserListViewController: UserProfileDelegate {
+    func addedNewUser() {
+        print("Usuario añadido")
+        presenter.update()
+    }
+    
+    func updatedUser() {
+        print("Usuario actualizado")
+        presenter.update()
+    }
+}
+
 // MARK: Private
 private extension UserListViewController {
     func setupNavigationController() {
         title = "app.innocv.users_title".localized
         
         let addUserButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addUser))
-        
-        // Añadir el botón a la vista
         navigationItem.rightBarButtonItem = addUserButton
         
         searchController = UISearchController(searchResultsController: nil)

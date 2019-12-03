@@ -11,6 +11,8 @@ import Foundation
 protocol UserProfilePresenter: BasePresenter {
     var isNewUser: Bool { get }
     
+    func getBirthday() -> Date?
+    
     func sendClicked(name: String, birthdate: Date)
 }
 

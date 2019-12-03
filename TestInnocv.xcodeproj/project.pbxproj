@@ -13,6 +13,8 @@
 		196EDC2B2395B4BD00439142 /* UserProfilePresenter+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2A2395B4BD00439142 /* UserProfilePresenter+View.swift */; };
 		196EDC2D2395CD9200439142 /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2C2395CD9200439142 /* UserRequest.swift */; };
 		196EDC2F2395CDFC00439142 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196EDC2E2395CDFC00439142 /* Date+Extension.swift */; };
+		198B138F2396D9F200BB3C0B /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */; };
+		198B13912396EAE600BB3C0B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198B13902396EAE600BB3C0B /* BaseViewController.swift */; };
 		19C374A32393E1D50097E0D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C374A22393E1D50097E0D5 /* AppDelegate.swift */; };
 		19C374A52393E1D50097E0D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C374A42393E1D50097E0D5 /* SceneDelegate.swift */; };
 		19C374AA2393E1D50097E0D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19C374A82393E1D50097E0D5 /* Main.storyboard */; };
@@ -51,6 +53,8 @@
 		196EDC2A2395B4BD00439142 /* UserProfilePresenter+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfilePresenter+View.swift"; sourceTree = "<group>"; };
 		196EDC2C2395CD9200439142 /* UserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		196EDC2E2395CDFC00439142 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		198B13902396EAE600BB3C0B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		19C3749F2393E1D50097E0D5 /* TestInnocv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestInnocv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19C374A22393E1D50097E0D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19C374A42393E1D50097E0D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				19C374D52393EF540097E0D5 /* BasePresenter.swift */,
+				198B13902396EAE600BB3C0B /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				19C374DE2393F2C80097E0D5 /* DateFormatter+Extension.swift */,
 				19C374E6239422730097E0D5 /* String+Extension.swift */,
 				196EDC2E2395CDFC00439142 /* Date+Extension.swift */,
+				198B138E2396D9F200BB3C0B /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -331,6 +337,8 @@
 				196EDC2D2395CD9200439142 /* UserRequest.swift in Sources */,
 				19C374D62393EF540097E0D5 /* BasePresenter.swift in Sources */,
 				196EDC292395B4AB00439142 /* UserProfilePresenterImpl.swift in Sources */,
+				198B13912396EAE600BB3C0B /* BaseViewController.swift in Sources */,
+				198B138F2396D9F200BB3C0B /* UITextField+Extension.swift in Sources */,
 				19C374DA2393F27E0097E0D5 /* BaseServices.swift in Sources */,
 				19C374E12393F3100097E0D5 /* WebServices.swift in Sources */,
 				19C374CD2393EB620097E0D5 /* UserListViewController.swift in Sources */,

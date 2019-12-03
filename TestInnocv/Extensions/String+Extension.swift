@@ -13,7 +13,7 @@ extension String {
         return self.localized()
     }
     
-    func localized(comment: String = "") -> String {
+    private func localized(comment: String = "") -> String {
         var result = NSLocalizedString(self, tableName: "CustomLocalizable", bundle: Bundle.main, value: self, comment: comment)
         
         if result == self {

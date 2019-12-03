@@ -38,16 +38,23 @@ extension UserProfilePresenterImpl: UserProfilePresenter {
         return self.user == nil
     }
     
-    func sendClicked(name: String, birthdate: Date) {
-        self.view.showLoading()
+    func getBirthday() -> Date? {
+        if isNewUser, let birthday = user?.birthdate {
+            return birthday
+        }
         
+        return nil
+    }
+    
+    func sendClicked(name: String, birthdate: Date) {
         self.user?.name = name
         self.user?.birthdate = birthdate
         
         if !isNewUser, let user = user {
             update(user)
         } else {
-           // TODO: IMPLEMENTAR AÑADIR USUARIO
+            let user = User(name: name, birthdate: birthdate)
+            add(user)
         }
     }
     
@@ -69,5 +76,22 @@ private extension UserProfilePresenterImpl {
             // TODO: MOSTAR MENSAJE TODO OK Y FINALIZAR VISTA NAVEGANDO HACIA ATRAS
             self?.view.navigateToBack()
         }
+    }
+    
+    func add(_ user: User) {
+        self.view.showLoading()
+        
+        webServices.addTo(user: user) { [weak self] (error) in
+                   
+                   if let error = error {
+                       print("UserListPresenterImpl -> Error: \(error)")
+                       return
+                   }
+                                    
+                   self?.view.hideLoading()
+                   
+                   // TODO: MOSTAR MENSAJE TODO OK Y FINALIZAR VISTA NAVEGANDO HACIA ATRAS
+                   self?.view.navigateToBack()
+               }
     }
 }

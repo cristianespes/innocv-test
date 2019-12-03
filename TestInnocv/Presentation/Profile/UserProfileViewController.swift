@@ -8,7 +8,12 @@
 
 import UIKit
 
-final class UserProfileViewController: UIViewController {
+protocol UserProfileDelegate {
+    func addedNewUser()
+    func updatedUser()
+}
+
+final class UserProfileViewController: BaseViewController {
     
     // MARK: IBoulets
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -22,26 +27,27 @@ final class UserProfileViewController: UIViewController {
     // MARK: Properties
     var presenter: UserProfilePresenter!
     
-    var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        
-        return dateFormatter
-    }()
-
-    static func newInstance(item: User? = nil) -> UserProfileViewController {
+    var delegate: UserProfileDelegate? = nil
+    
+    static func newInstance(item: User? = nil, delegate: UserProfileDelegate? = nil) -> UserProfileViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let userProfileViewController = storyboard.instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
         userProfileViewController.presenter = UserProfilePresenterImpl(userProfileViewController, user: item)
+        userProfileViewController.delegate = delegate
         
         return userProfileViewController
     }
     
     // MARK: IBAction
     @IBAction func buttonTapped(_ sender: UIButton) {
-        // TODO: AÑADIR COMPROBACION
-        
-        presenter.sendClicked(name: nameTextField.text!, birthdate: dateFormatter.date(from: dateTextField.text!)!)
+        if areFilledFields() {
+            presenter.sendClicked(name: nameTextField.text!, birthdate: dateFormatter.date(from: dateTextField.text!)!)
+        } else {
+            let alertController = UIAlertController(title: "app.innocv.warning".localized, message: "app.innocv.must_fill_red_fields".localized, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "app.innocv.accept".localized, style: .default, handler: nil))
+            
+            present(alertController, animated: true)
+        }
     }
     
     // MARK: Life Cycle
@@ -61,6 +67,13 @@ extension UserProfileViewController: UserProfileView {
         setupData()
         
         scrollView.keyboardDismissMode = .onDrag
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func showLoading() {
@@ -87,12 +100,17 @@ extension UserProfileViewController: UserProfileView {
         } else {
             dateTextField.text = ""
         }
+        
+        dateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone), dateInitial:
+        birthdate, maximumDate: Date())
     }
     
     func navigateToBack() {
         if presenter.isNewUser {
+            delegate?.addedNewUser()
             dismiss(animated: true, completion: nil)
         } else {
+            delegate?.updatedUser()
             navigationController?.popViewController(animated: true)
         }
     }
@@ -102,6 +120,27 @@ extension UserProfileViewController: UserProfileView {
 private extension UserProfileViewController {
     func setupNavigationController() {
         title = "app.innocv.users_title".localized
+        
+        if presenter.isNewUser {
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAddNewUser))
+            navigationItem.leftBarButtonItem = cancelButton
+        }
+    }
+    
+    @objc func cancelAddNewUser() {
+        if !(nameTextField.text?.isEmpty ?? false) || !(dateTextField.text?.isEmpty ?? false) {
+            let selectedStyle: UIAlertController.Style = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad ? .alert: .actionSheet
+            
+            let alertController = UIAlertController(title: "app.innocv.cancel_new_user_title".localized, message: "app.innocv.cancel_new_user_message".localized, preferredStyle: selectedStyle)
+            alertController.addAction(UIAlertAction(title: "app.innocv.yes".localized, style: .default, handler: { _ in
+                self.navigateToBack()
+            }))
+            alertController.addAction(UIAlertAction(title: "app.innocv.no".localized, style: .default, handler: nil))
+            
+            present(alertController, animated: true)
+        } else{
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func setupActivityIndicator() {
@@ -115,6 +154,58 @@ private extension UserProfileViewController {
         nameTextField.placeholder = "app.innocv.introduce_name".localized
         dateTextField.placeholder = "app.innocv.introduce_birthday".localized
         
+        if presenter.isNewUser {
+            dateTextField.setInputViewDatePicker(target: self, selector: #selector(tapDone), maximumDate: Date())
+        }
+        
         sendButton.setTitle(presenter.isNewUser ? "app.innocv.add".localized : "app.innocv.update".localized, for: .normal)
+    }
+    
+    @objc func tapDone() {
+        if let datePicker = dateTextField.inputView as? UIDatePicker {
+            dateTextField.text = dateFormatter.string(from: datePicker.date)
+        }
+        
+        dateTextField.resignFirstResponder() // 2-5
+    }
+    
+    func areFilledFields() -> Bool {
+        var isFilled = true
+        
+        if nameTextField.text?.isEmpty ?? true {
+            isFilled = false
+            nameLabel.textColor = .red
+            
+            nameTextField.layer.borderColor = UIColor.red.cgColor
+            nameTextField.layer.borderWidth = 1.0
+        } else {
+            if #available(iOS 13.0, *) {
+                nameLabel.textColor = .label
+            } else {
+                nameLabel.textColor = .black
+            }
+            
+            nameTextField.layer.borderColor = UIColor.black.cgColor
+            nameTextField.layer.borderWidth = 0
+        }
+        
+        if dateTextField.text?.isEmpty ?? true {
+            isFilled = false
+            dateLabel.textColor = .red
+            
+            dateTextField.layer.borderColor = UIColor.red.cgColor
+            dateTextField.layer.borderWidth = 1.0
+        } else {
+            if #available(iOS 13.0, *) {
+                dateLabel.textColor = .label
+            } else {
+                dateLabel.textColor = .black
+            }
+            
+            dateTextField.layer.borderColor = UIColor.black.cgColor
+            dateTextField.layer.borderWidth = 0
+        }
+        
+        return isFilled
     }
 }
