@@ -12,7 +12,6 @@ protocol UserProfilePresenter: BasePresenter {
     var isNewUser: Bool { get }
     
     func getBirthday() -> Date?
-    
     func sendClicked(name: String, birthdate: Date)
 }
 
@@ -20,7 +19,8 @@ protocol UserProfileView {
     func setupViews()
     func showLoading()
     func hideLoading()
-    
     func loadData(name: String, birthdate: Date?)
+    func showError(message: String)
+    
     func navigateToBack()
 }

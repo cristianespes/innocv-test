@@ -65,15 +65,13 @@ private extension UserProfilePresenterImpl {
         self.view.showLoading()
         
         webServices.updateWith(user: user) { [weak self] (error) in
-            
             if let error = error {
-                print("UserListPresenterImpl -> Error: \(error)")
+                print("Error: \(error)")
+                self?.view.showError(message: "app.innocv.there_was_error".localized)
                 return
             }
                              
             self?.view.hideLoading()
-            
-            // TODO: MOSTAR MENSAJE TODO OK Y FINALIZAR VISTA NAVEGANDO HACIA ATRAS
             self?.view.navigateToBack()
         }
     }
@@ -82,16 +80,14 @@ private extension UserProfilePresenterImpl {
         self.view.showLoading()
         
         webServices.addTo(user: user) { [weak self] (error) in
-                   
-                   if let error = error {
-                       print("UserListPresenterImpl -> Error: \(error)")
-                       return
-                   }
-                                    
-                   self?.view.hideLoading()
-                   
-                   // TODO: MOSTAR MENSAJE TODO OK Y FINALIZAR VISTA NAVEGANDO HACIA ATRAS
-                   self?.view.navigateToBack()
-               }
+            if let error = error {
+                print("Error: \(error)")
+                self?.view.showError(message: "app.innocv.there_was_error".localized)
+                return
+            }
+                    
+            self?.view.hideLoading()
+            self?.view.navigateToBack()
+        }
     }
 }

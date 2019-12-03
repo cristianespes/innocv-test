@@ -43,10 +43,7 @@ final class UserProfileViewController: BaseViewController {
         if areFilledFields() {
             presenter.sendClicked(name: nameTextField.text!, birthdate: dateFormatter.date(from: dateTextField.text!)!)
         } else {
-            let alertController = UIAlertController(title: "app.innocv.warning".localized, message: "app.innocv.must_fill_red_fields".localized, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "app.innocv.accept".localized, style: .default, handler: nil))
-            
-            present(alertController, animated: true)
+            showWarningAlert(message: "app.innocv.must_fill_red_fields".localized)
         }
     }
     
@@ -105,6 +102,10 @@ extension UserProfileViewController: UserProfileView {
         birthdate, maximumDate: Date())
     }
     
+    func showError(message: String) {
+        showWarningAlert(message: message)
+    }
+    
     func navigateToBack() {
         if presenter.isNewUser {
             delegate?.addedNewUser()
@@ -119,7 +120,7 @@ extension UserProfileViewController: UserProfileView {
 // MARK: Private
 private extension UserProfileViewController {
     func setupNavigationController() {
-        title = "app.innocv.users_title".localized
+        title = "app.innocv.detail".localized
         
         if presenter.isNewUser {
             let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAddNewUser))

@@ -17,7 +17,6 @@ final class WebServices: BaseServices {
             
             DispatchQueue.main.async {
                 if  let error = error {
-                    // TODO: Manejar los errores que lleguen
                     completion(error, nil)
                     return
                 }
@@ -50,7 +49,6 @@ final class WebServices: BaseServices {
         session.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if  let error = error {
-                    // TODO: Manejar los errores que lleguen
                     completion(error)
                     return
                 }
@@ -72,7 +70,6 @@ final class WebServices: BaseServices {
         session.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if  let error = error {
-                    // TODO: Manejar los errores que lleguen
                     completion(error)
                     return
                 }
@@ -94,7 +91,6 @@ final class WebServices: BaseServices {
         session.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
                 if  let error = error {
-                    // TODO: Manejar los errores que lleguen
                     completion(error)
                     return
                 }

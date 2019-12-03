@@ -17,4 +17,10 @@ class BaseViewController: UIViewController {
         return dateFormatter
     }()
     
+    func showWarningAlert(message: String? = nil) {
+        let alertController = UIAlertController(title: "app.innocv.warning".localized, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "app.innocv.accept".localized, style: .default, handler: nil))
+        
+        present(alertController, animated: true)
+    }
 }

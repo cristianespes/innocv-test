@@ -17,3 +17,5 @@
 "app.innocv.warning" = "Atención";
 "app.innocv.must_fill_red_fields" = "Debe rellenar los campos en rojo";
 "app.innocv.accept" = "Aceptar";
+"app.innocv.detail" = "Detalle";
+"app.innocv.there_was_error" = "Ha ocurrido un error. Por favor, inténtelo de nuevo más tarde.";

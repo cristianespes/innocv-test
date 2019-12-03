@@ -75,6 +75,15 @@ extension UserListViewController: UserListView {
         tableView.isHidden = true
     }
     
+    func showError(message: String) {
+        showWarningAlert(message: message)
+    }
+    
+    func deleteItem(index: Int) {
+        let indexPath = IndexPath(item: index, section: 0)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
     func navigateToProfile(item: User) {
         let profileViewController = UserProfileViewController.newInstance(item: item, delegate: self)
         
@@ -125,6 +134,20 @@ extension UserListViewController: UITableViewDelegate {
             presenter.itemClicked(item: presenter.getItemsOnTableView()[indexPath.row])
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            if self.searchController.isActive && !searchBarIsEmpty() {
+                presenter.itemDeleted(index: indexPath.row, item: presenter.searchResults[indexPath.row])
+            } else {
+                presenter.itemDeleted(index: indexPath.row, item: presenter.getItemsOnTableView()[indexPath.row])
+            }
+        }
+    }
 }
 
 // MARK: UISearchResultsUpdating
@@ -144,12 +167,10 @@ extension UserListViewController: UISearchResultsUpdating {
 // MARK: UserProfileDelegate
 extension UserListViewController: UserProfileDelegate {
     func addedNewUser() {
-        print("Usuario añadido")
         presenter.update()
     }
     
     func updatedUser() {
-        print("Usuario actualizado")
         presenter.update()
     }
 }
