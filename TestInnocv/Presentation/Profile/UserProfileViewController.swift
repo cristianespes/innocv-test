@@ -115,6 +115,14 @@ extension UserProfileViewController: UserProfileView {
             navigationController?.popViewController(animated: true)
         }
     }
+    
+    func hideView() {
+        scrollView.isHidden = true
+    }
+    
+    func showView() {
+        scrollView.isHidden = false
+    }
 }
 
 // MARK: Private

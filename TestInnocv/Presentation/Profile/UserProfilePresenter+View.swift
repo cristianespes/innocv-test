@@ -21,6 +21,8 @@ protocol UserProfileView {
     func hideLoading()
     func loadData(name: String, birthdate: Date?)
     func showError(message: String)
+    func hideView()
+    func showView()
     
     func navigateToBack()
 }

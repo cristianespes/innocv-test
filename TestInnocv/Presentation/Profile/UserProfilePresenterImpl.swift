@@ -63,10 +63,12 @@ extension UserProfilePresenterImpl: UserProfilePresenter {
 private extension UserProfilePresenterImpl {
     func update(_ user: User) {
         self.view.showLoading()
+        self.view.hideView()
         
         webServices.updateWith(user: user) { [weak self] (error) in
             if let error = error {
                 print("Error: \(error)")
+                self?.view.showView()
                 self?.view.showError(message: "app.innocv.there_was_error".localized)
                 return
             }
@@ -78,10 +80,12 @@ private extension UserProfilePresenterImpl {
     
     func add(_ user: User) {
         self.view.showLoading()
+        self.view.hideView()
         
         webServices.addTo(user: user) { [weak self] (error) in
             if let error = error {
                 print("Error: \(error)")
+                self?.view.showView()
                 self?.view.showError(message: "app.innocv.there_was_error".localized)
                 return
             }
